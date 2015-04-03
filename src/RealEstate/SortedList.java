@@ -2,8 +2,11 @@ package RealEstate;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 /**
  *
@@ -91,4 +94,101 @@ public class SortedList {
 
     }
     
- }   
+     /**
+ *
+ * @Edited By Canchana
+ */
+
+    public ArrayList<String> addlist() {
+        House1ist1.add(Lot_Number);
+        House1ist1.add(FirstName);
+        House1ist1.add(LastName);
+        House1ist1.add(Price);
+        House1ist1.add(No_Of_Bed);
+        House1ist1.add(Square_Feet);
+
+        return (House1ist1);
+    }
+
+    public void printlist(ArrayList arr) {
+        System.out.println("printList");
+        System.out.println("Array List:"+arr);
+    }
+
+    public void makeEmpty(ArrayList arr) {
+        // finding size of this list
+        int noofelements = arr.size();
+         System.out.println("\n"+"makeEmpty");
+        System.out.println("List consists of " + noofelements + " elements");
+        System.out.println("Performing makeEmpty operation !");
+        arr.clear();
+//        Collections.<String> emptyList();
+        noofelements = arr.size();
+        System.out.println("Now, list consists of " + noofelements + " elements");
+        if (arr.isEmpty()) {
+            System.out.println("Empty"); // doesn't get displayed
+        }
+    }
+
+    public void find(ArrayList arr) {
+        int index = arr.indexOf(3);
+        System.out.println("\n"+"find");
+        System.out.println("Position of the First Element:"+index);  
+    }
+    
+         public void removeLineFromFile(String file, int lineToRemove) {
+
+        try {
+
+            File inFile = new File(file);// gets the file which was send by the RealEstate
+
+            if (!inFile.isFile()) {
+                System.out.println("Parameter is not an existing file");//checks the file whether it exist
+
+                return;
+            }
+            //Construct the new file that will later be renamed to the original filename.
+            File tempFile = new File(inFile.getAbsolutePath() + ".tmp");//new file .temp
+            BufferedReader br = new BufferedReader(new FileReader(file));//read the orignal file
+            PrintWriter pw = new PrintWriter(new FileWriter(tempFile));//writs the temp file
+
+            String line = null;
+            String[] result = null;
+            boolean bool = false;
+
+            
+          
+            while ((line = br.readLine()) != null) {//Read from the original file and write to the new
+                if (!line.trim().equals(lineToRemove)) {  //unless content matches data to be removed.
+                    result = line.split("\\s");
+                    for (int x = 0; x < result.length; x++) {
+                        if (x == 0) {
+                            Lot_Number = result[x];
+                            Lotno = Integer.parseInt(Lot_Number);
+                        }
+                    }
+                    if (Lotno != lineToRemove) {
+                        pw.println(line);
+                        pw.flush();
+
+                    } 
+                }
+            }
+            pw.close();
+            br.close();
+            //Delete the Orignal file
+            if (!inFile.delete()) {
+                System.out.println("Could not delete file");
+                return;
+            }
+            //Rename the new file to the filename the original file had.
+            if (!tempFile.renameTo(inFile)) {
+                System.out.println("Could not rename file");
+            }
+           //  System.out.println("Line has successfully deleted");
+        } catch (FileNotFoundException ex) {
+        } catch (IOException ex) {
+        }
+
+    }
+}

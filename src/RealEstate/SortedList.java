@@ -195,26 +195,26 @@ public class SortedList {
 
     }
          
-    public static void main(String[] args) throws Exception {
-        SortedList S = new SortedList();
-        S.setinfo("2", "Raveen", "Jaya", "20,000", "4", "4000");
-        ArrayList arr = new ArrayList();
-        arr = S.addlist();
-        S.printlist(arr);
-        S.find(arr);
-        S.insert(arr,"2","3",3);// comment makeempty method 
-        S.Remove(arr);
-        S.FindKTH(arr);
-        S.makeEmpty(arr);
-        
-        File f = new File("RealEstale.txt");
-        String b = S.readLines(f, 2);
-        
-        System.out.println(b);
-        
-        String Line1 = S.readLines(f,3);
-        int Line = Integer.parseInt(Line1);
-        S.removeLineFromFile("RealEstale.txt", Line);
-    }
+//    public static void main(String[] args) throws Exception {
+//        SortedList S = new SortedList();
+//        S.setinfo("2", "Raveen", "Jaya", "20,000", "4", "4000");
+//        ArrayList arr = new ArrayList();
+//        arr = S.addlist();
+//        S.printlist(arr);
+//        S.find(arr);
+//        S.insert(arr,"2","3",3);// comment makeempty method 
+//        S.Remove(arr);
+//        S.FindKTH(arr);
+//        S.makeEmpty(arr);
+//        
+//        File f = new File("RealEstale.txt");
+//        String b = S.readLines(f, 2);
+//        
+//        System.out.println(b);
+//        
+//        String Line1 = S.readLines(f,3);
+//        int Line = Integer.parseInt(Line1);
+//        S.removeLineFromFile("RealEstale.txt", Line);
+//    }
 
 }

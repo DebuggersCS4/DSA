@@ -1,16 +1,40 @@
+package RealEstate;
+
+import static RealEstate.SortedList.Lotno;
+import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package RealEstate;
-
 /**
  *
- * @author Shenali
+ * @author Vishan
  */
 public class RealEstate extends javax.swing.JFrame {
+
+    // variables delcare
+    String Lot_Number, FirstName, LastName, Price, No_Of_Bed, Square_Feet;
+    public String findvalue;
+    private int Lotno;
+    String[] result = null;
+    String thisLine = null;
+    int r = 1;
+    String lastLine = "null";
+
+    String nextLine = null;
+    int ri = 0;
+    int c = 0;
 
     /**
      * Creates new form RealEstate
@@ -28,21 +52,526 @@ public class RealEstate extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        fn = new javax.swing.JTextField();
+        Lot = new javax.swing.JTextField();
+        ln = new javax.swing.JTextField();
+        pr = new javax.swing.JTextField();
+        sf = new javax.swing.JTextField();
+        nb = new javax.swing.JTextField();
+        Reset = new javax.swing.JButton();
+        Next = new javax.swing.JButton();
+        Add = new javax.swing.JButton();
+        Delete = new javax.swing.JButton();
+        Clear = new javax.swing.JButton();
+        Find = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Real Estate Program");
+
+        jLabel1.setText("Lot Number");
+
+        jLabel2.setText("First Name");
+
+        jLabel3.setText("Last Name");
+
+        jLabel4.setText("Price");
+
+        jLabel5.setText("Square Feet");
+
+        jLabel6.setText("Number of Bedrooms");
+
+        fn.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fnKeyPressed(evt);
+            }
+        });
+
+        Lot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LotActionPerformed(evt);
+            }
+        });
+        Lot.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                LotKeyTyped(evt);
+            }
+        });
+
+        ln.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                lnKeyPressed(evt);
+            }
+        });
+
+        pr.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                prKeyPressed(evt);
+            }
+        });
+
+        nb.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                nbKeyPressed(evt);
+            }
+        });
+
+        Reset.setText("Reset");
+        Reset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ResetActionPerformed(evt);
+            }
+        });
+
+        Next.setText("Next");
+        Next.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NextActionPerformed(evt);
+            }
+        });
+
+        Add.setText("Add");
+        Add.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AddMouseClicked(evt);
+            }
+        });
+        Add.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddActionPerformed(evt);
+            }
+        });
+
+        Delete.setText("Delete");
+        Delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteActionPerformed(evt);
+            }
+        });
+
+        Clear.setText("Clear");
+        Clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ClearActionPerformed(evt);
+            }
+        });
+
+        Find.setText("Find");
+        Find.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FindActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel7.setText("Next House Displayed");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(Add)
+                                .addComponent(Reset)
+                                .addComponent(Clear)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(Next)
+                                        .addGap(11, 11, 11))
+                                    .addComponent(Delete)
+                                    .addComponent(Find))
+                                .addGap(132, 132, 132))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(Lot, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(91, 91, 91))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(nb, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(sf, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(pr, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel3)
+                                .addGap(165, 165, 165)
+                                .addComponent(ln, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(fn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(91, 91, 91))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jLabel7)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(Lot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(fn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(ln, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(pr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(sf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(nb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Reset)
+                    .addComponent(Next))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Add)
+                    .addComponent(Delete))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Clear)
+                    .addComponent(Find))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+public void getvalues() {
+        // assign values from the text field
+        FirstName = fn.getText();
+        LastName = ln.getText();
+        Price = pr.getText();
+        No_Of_Bed = sf.getText();
+        Square_Feet = nb.getText();
+    }
+
+    public void setvalues() {
+        // set value from the variables 
+        Lot.setText(Lot_Number);
+        fn.setText(FirstName);
+        ln.setText(LastName);
+        pr.setText(Price);
+        sf.setText(No_Of_Bed);
+        nb.setText(Square_Feet);
+    }
+
+
+    private void ClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearActionPerformed
+        //clear all the Jtextfields
+        Lot.setText("");
+        fn.setText("");
+        ln.setText("");
+        pr.setText("");
+        sf.setText("");
+        nb.setText("");
+
+    }//GEN-LAST:event_ClearActionPerformed
+
+    private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
+        // Addition to the file
+        getvalues();
+        if(FirstName.isEmpty()||LastName.isEmpty()||Price.isEmpty()||No_Of_Bed.isEmpty()||Square_Feet.isEmpty())
+        {
+            JOptionPane.showMessageDialog(this, "All the fields are Mandatory" , "Error", JOptionPane.PLAIN_MESSAGE);
+           
+        }
+        else if (Lot.getText().isEmpty()) { //check whether the Lot Jtextfield is empty or not
+            try {//Auto increment the Lot number 
+                FileReader fr = new FileReader("RealEstale.txt");// accessing the txt file
+                BufferedReader br = new BufferedReader(fr);
+
+                while ((thisLine = br.readLine()) != null) {// Read the file
+                    lastLine = thisLine; // gets the last line
+                    result = thisLine.split("\\s"); //puts the last line to a array
+                }
+                for (int x = 0; x < result.length; x++) {// checks the array one by one element
+                    if (x == 0) {
+                        Lot_Number = result[0];// gets the first index element
+                        Lotno = Integer.parseInt(Lot_Number);// assigns it the LotNumber
+                    }
+                }
+                r = Lotno + 1;// Auto increment the value so to get the new Lot Number
+                fr.close();// close the file
+                br.close();
+            } catch (IOException | NumberFormatException e) {
+            }
+
+            String res = Integer.toString(r);//convert the increment value to string
+            Lot.setText(res);// set it on the jtextfield
+
+            Lot_Number = res;// equals to the variable
+            getvalues();// gets the rest of the values from the JTextFields
+
+//            HouseFile H = new HouseFile();// object created for the HouseFile class
+            try {
+                ListHouse L = new ListHouse();
+
+                L.setinfo(Lot_Number, FirstName, LastName, Price, No_Of_Bed, Square_Feet);//passing the parameters to the setinfo method
+
+                ArrayList arr = new ArrayList();//creats new array list
+                L.addlist(arr);//in List House you add the elements to an ArrayList
+                L.copy();//Copies the ArrayList to a new Arraylist as requested 
+
+                L.getString();//this will get the last Arraylist in the file 
+                L.compareTo();// this function will compare the last ArrayList in the file with the new ArrayList 
+            } catch (IOException ex) {
+                Logger.getLogger(RealEstate.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            // adds the values to a ArrayList 
+            //  System.out.println(arr);
+            System.out.println("Insertion Successful:" + Lot_Number);
+
+            JOptionPane.showMessageDialog(this, "Insertion Successful to Lotnumber :" + res, "Confirm", JOptionPane.PLAIN_MESSAGE);
+            ClearActionPerformed(evt);
+        } else {
+            JOptionPane.showMessageDialog(this, "Lot Number should be empty ", "ERROR: Lot number is auto increment", JOptionPane.PLAIN_MESSAGE);
+            
+        }
+
+    }//GEN-LAST:event_AddActionPerformed
+
+    private void FindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FindActionPerformed
+
+        int no;
+        String value = Lot.getText();
+        //System.out.println("Blaa"+value);
+        if (value.isEmpty()) { // if the JTextField is empty will assign Lot number 0
+            no = 1;
+        } else {
+            no = Integer.parseInt(value);// gets the Current value on the Lot Jtextfield   
+        }
+        SortedList S = new SortedList();// object create to Sorted list class
+        File f = new File("RealEstale.txt");// assigning the file created to file object
+        try {
+            String b = S.readLines(f, no);// Passes the file and the Lot number to read line and gets the string 
+            String[] result = b.split("\\s");// Split the string and add it to a array 
+            for (int x = 0; x < result.length; x++) {// checking the array
+
+                if (x == 0) {
+                    Lot_Number = result[x];// equate the result array element to a variable
+                    Lot.setText(Lot_Number);// variable -> JTextFeild 
+                } else if (x == 1) {
+                    FirstName = result[x];
+                    fn.setText(FirstName);
+                } else if (x == 2) {
+                    LastName = result[x];
+                    ln.setText(LastName);
+                } else if (x == 3) {
+                    Price = result[x];
+                    pr.setText(Price);
+                } else if (x == 4) {
+                    No_Of_Bed = result[x];
+                    sf.setText(No_Of_Bed);
+                } else if (x == 5) {
+                    Square_Feet = result[x];
+                    nb.setText(Square_Feet);
+                } else {
+                    System.out.println("Nothing");
+                }
+
+            }
+            System.out.println("Found Successful:" + no);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Couldn't find :", "Error", JOptionPane.ERROR_MESSAGE);
+            ClearActionPerformed(evt);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_FindActionPerformed
+
+    private void NextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextActionPerformed
+        int no;
+        String value = Lot.getText();
+        //System.out.println("Blaa"+value);
+        if (value.isEmpty()) { // if the JTextField is empty will assign Lot number 0
+            no = 0;
+        } else {
+            no = Integer.parseInt(value);// gets the Current value on the Lot Jtextfield   
+        }
+
+        //System.out.println(no);
+        String[] result1 = null;
+        String thisLine1 = null;
+
+        int r = 0;
+        int b = 0;
+
+        try {
+            FileReader fr = new FileReader("RealEstale.txt");
+            BufferedReader br = new BufferedReader(fr);
+            while ((thisLine1 = br.readLine()) != null) {// read the file line by line
+                result1 = thisLine1.split("\\s");// get the line , splits it and adds to an array
+                for (int x = 0; x < result1.length; x++) {
+
+                    if (x == 0) {//equals the first element to the lot_number variable
+                        Lot_Number = result1[0];
+                        Lotno = Integer.parseInt(Lot_Number);
+                        //    System.out.println(Lotno);
+                    }
+                }
+
+                if (b == 1 || no == 0) {// if the prev line was the current line then the c should be incremented.now check the c whether it 1 
+                    for (int x = 0; x < result1.length; x++) {//if so it will take the current line and equate it the varibles
+                        if (x == 0) {
+                            //   System.out.println("Comes here");
+                            Lot_Number = result1[x];
+                        } else if (x == 1) {
+                            FirstName = result1[x];
+                        } else if (x == 2) {
+                            LastName = result1[x];
+                        } else if (x == 3) {
+                            Price = result1[x];
+                        } else if (x == 4) {
+                            No_Of_Bed = result1[x];
+                        } else if (x == 5) {
+                            Square_Feet = result1[x];
+                        } else {
+
+                        }
+                    }
+                    ClearActionPerformed(evt);
+
+                    //  System.out.println(Lot_Number);
+                    Lot.setText(Lot_Number);// set the values to JTextField
+                    fn.setText(FirstName);
+                    ln.setText(LastName);
+                    pr.setText(Price);
+                    sf.setText(No_Of_Bed);
+                    nb.setText(Square_Feet);
+
+                    System.out.println("Next Suceessful :" + Lot_Number);
+                    b += 1;// increment the value of C so it wont come back to this condition
+                    no += 1;// Lot number is O if no input was given
+                    break;
+
+                }
+                if (no == Lotno) {//check whether the lotnumber is equal to the current Lot number
+                    b += 1;//if so increment c by 1
+                    //System.out.println(Lot_Number);
+                }
+            }
+
+            r = Lotno + 1;//increment the value lotno by one
+            br.close();// close the file
+            fr.close();
+
+        } catch (IOException | NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "You Have reached the end", "Error", JOptionPane.ERROR_MESSAGE);
+            ClearActionPerformed(evt);
+            e.getMessage();
+        }
+
+
+    }//GEN-LAST:event_NextActionPerformed
+
+    private void LotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LotActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LotActionPerformed
+
+    private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
+        int no = Integer.parseInt(Lot.getText()); // gets the input value on the Lot Jtextfield
+        try {
+            SortedList S = new SortedList();// object for sortedlist
+//            int Line = S.FindLine(no);//Pass the no to Find line to check whether its there
+            S.removeLineFromFile("RealEstale.txt", no);// send the checked line and the file
+            System.out.println("Deleted Suceessful:" + no);
+            JOptionPane.showMessageDialog(this, "Deleted Successful:" + no, "Deleted", JOptionPane.ERROR_MESSAGE);
+            ClearActionPerformed(evt);
+        } catch (NumberFormatException e) {
+
+            ClearActionPerformed(evt);
+        } catch (NullPointerException ex) {
+            JOptionPane.showMessageDialog(this, "Couldn't find :" + no, "Error", JOptionPane.ERROR_MESSAGE);
+            ClearActionPerformed(evt);
+        }
+    }//GEN-LAST:event_DeleteActionPerformed
+
+    private void ResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetActionPerformed
+        ClearActionPerformed(evt);
+    }//GEN-LAST:event_ResetActionPerformed
+
+    private void AddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddMouseClicked
+
+    }//GEN-LAST:event_AddMouseClicked
+
+    private void LotKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_LotKeyTyped
+        ValidateValues.checkTelNo(Lot);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            ValidateValues.checkTelNo(Lot);
+            Lot.requestFocus();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_LotKeyTyped
+
+    private void fnKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fnKeyPressed
+        ValidateValues.validateString(fn);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            ValidateValues.validateString(fn);
+            fn.requestFocus();
+
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_fnKeyPressed
+
+    private void lnKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lnKeyPressed
+        ValidateValues.validateString(ln);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            ValidateValues.validateString(ln);
+            ln.requestFocus();
+
+        }
+    }//GEN-LAST:event_lnKeyPressed
+
+    private void prKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_prKeyPressed
+        ValidateValues.checkTelNo(pr);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            ValidateValues.checkTelNo(pr);
+            pr.requestFocus();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_prKeyPressed
+
+    private void nbKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nbKeyPressed
+        ValidateValues.checkTelNo(nb);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            ValidateValues.checkTelNo(nb);
+            nb.requestFocus();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_nbKeyPressed
 
     /**
      * @param args the command line arguments
@@ -75,10 +604,30 @@ public class RealEstate extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new RealEstate().setVisible(true);
+
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Add;
+    private javax.swing.JButton Clear;
+    private javax.swing.JButton Delete;
+    private javax.swing.JButton Find;
+    private javax.swing.JTextField Lot;
+    private javax.swing.JButton Next;
+    private javax.swing.JButton Reset;
+    private javax.swing.JTextField fn;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JTextField ln;
+    private javax.swing.JTextField nb;
+    private javax.swing.JTextField pr;
+    private javax.swing.JTextField sf;
     // End of variables declaration//GEN-END:variables
 }

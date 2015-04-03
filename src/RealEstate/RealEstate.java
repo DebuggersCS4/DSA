@@ -3,9 +3,11 @@ package RealEstate;
 import static RealEstate.SortedList.Lotno;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -307,29 +309,39 @@ public void getvalues() {
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         // Addition to the file
         getvalues();
-        if(FirstName.isEmpty()||LastName.isEmpty()||Price.isEmpty()||No_Of_Bed.isEmpty()||Square_Feet.isEmpty())
-        {
-            JOptionPane.showMessageDialog(this, "All the fields are Mandatory" , "Error", JOptionPane.PLAIN_MESSAGE);
-           
-        }
-        else if (Lot.getText().isEmpty()) { //check whether the Lot Jtextfield is empty or not
-            try {//Auto increment the Lot number 
-                FileReader fr = new FileReader("RealEstale.txt");// accessing the txt file
-                BufferedReader br = new BufferedReader(fr);
+        if (FirstName.isEmpty() || LastName.isEmpty() || Price.isEmpty() || No_Of_Bed.isEmpty() || Square_Feet.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "All the fields are Mandatory", "Error", JOptionPane.PLAIN_MESSAGE);
 
-                while ((thisLine = br.readLine()) != null) {// Read the file
-                    lastLine = thisLine; // gets the last line
-                    result = thisLine.split("\\s"); //puts the last line to a array
-                }
-                for (int x = 0; x < result.length; x++) {// checks the array one by one element
-                    if (x == 0) {
-                        Lot_Number = result[0];// gets the first index element
-                        Lotno = Integer.parseInt(Lot_Number);// assigns it the LotNumber
+        } else if (Lot.getText().isEmpty()) { //check whether the Lot Jtextfield is empty or not
+            try {//Auto increment the Lot number 
+                File file = new File("RealEstale.txt");
+                boolean empty = !file.exists() || file.length() == 0;
+                if (empty == false) {
+                    FileReader fr = new FileReader("RealEstale.txt");// accessing the txt file
+                    BufferedReader br = new BufferedReader(fr);
+                    while ((thisLine = br.readLine()) != null) {// Read the file
+                        lastLine = thisLine; // gets the last line
+                        result = thisLine.split("\\s"); //puts the last line to a array
                     }
+                    for (int x = 0; x < result.length; x++) {// checks the array one by one element
+                        if (x == 0) {
+                            Lot_Number = result[0];// gets the first index element
+                            Lotno = Integer.parseInt(Lot_Number);// assigns it the LotNumber
+                        }
+                    }
+                    r = Lotno + 1;// Auto increment the value so to get the new Lot Number  
+                    fr.close();// close the file
+                    br.close();
+                } else {
+                    r = 1;
+                    // create new file
+                    File f = new File("RealEstale.txt");
+
+                    // tries to create new file in the system
+                    boolean bool = f.createNewFile();
+
                 }
-                r = Lotno + 1;// Auto increment the value so to get the new Lot Number
-                fr.close();// close the file
-                br.close();
+
             } catch (IOException | NumberFormatException e) {
             }
 
@@ -363,7 +375,7 @@ public void getvalues() {
             ClearActionPerformed(evt);
         } else {
             JOptionPane.showMessageDialog(this, "Lot Number should be empty ", "ERROR: Lot number is auto increment", JOptionPane.PLAIN_MESSAGE);
-            
+
         }
 
     }//GEN-LAST:event_AddActionPerformed

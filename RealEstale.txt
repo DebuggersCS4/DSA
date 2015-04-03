@@ -1,0 +1,2 @@
+1	Shenali	Silva	10000	200	10	
+2	Madushan	Chathuranga	20000	1000	20	
